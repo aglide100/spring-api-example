@@ -1,0 +1,15 @@
+*.jar
+*.war
+
+*.class
+
+*.iml
+*.ipr
+*.iws
+*.idea/
+
+
+.gradle
+target/
+
+.DS_Store
