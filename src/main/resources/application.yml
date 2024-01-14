@@ -1,0 +1,14 @@
+server:
+  servlet:
+    encoding:
+      force-response: true
+springdoc:
+  api-docs:
+    version: openapi_3_0
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  messages:
+    basename: i18n/message
+

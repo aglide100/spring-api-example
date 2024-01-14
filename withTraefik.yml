@@ -1,0 +1,37 @@
+version: "3.5"
+
+services:
+  api:
+    image: ${IMAGEURL}
+    networks:
+      - traefik-network
+    deploy:
+      mode: replicated
+      replicas: 1
+      update_config:
+        parallelism: 1
+        order: start-first
+        failure_action: rollback
+        delay: 10s
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-network
+        - traefik.http.routers.example-api.rule=Host(`sia-api.${Domain}`)
+        - traefik.http.routers.example-api.middlewares=redirect-to-https
+        - traefik.http.routers.example-api.entrypoints=web
+        - traefik.http.services.example-api.loadbalancer.server.port=8080
+        - traefik.http.routers.example-api--https.rule=Host(`sia-api.${Domain}`)
+        - traefik.http.routers.example-api--https.tls=true
+        - traefik.http.routers.example-api--https.tls.certresolver=myresolver
+        - traefik.http.routers.example-api--https.entrypoints=websecure
+      placement:
+        constraints: [ node.role==worker ]
+
+networks:
+  traefik-network:
+    external: true

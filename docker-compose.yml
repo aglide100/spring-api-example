@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  api:
+    build:
+      context: .
+    networks:
+      - example-network
+    ports:
+      - 8080:8080
+
+networks:
+  example-network:
+    external: true
