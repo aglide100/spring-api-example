@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package pb.unit.common;
+option java_package="com.example.pb.unit.common";
+option java_multiple_files=true;
+option go_package = "github.com/example/test/pb/unit/common";
+
+message ReturnMsg {
+    string result = 1;
+    string error = 2;
+}
