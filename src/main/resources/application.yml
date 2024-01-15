@@ -12,3 +12,10 @@ spring:
   messages:
     basename: i18n/message
 
+grpc:
+  client:
+    test:
+      address: ${TEST_ADDR}
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext

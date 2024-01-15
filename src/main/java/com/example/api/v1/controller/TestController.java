@@ -4,6 +4,8 @@ import com.example.config.BaseConfig;
 import com.example.controller.CoreController;
 import com.example.model.msg.Message;
 import com.example.model.msg.MessageStatus;
+import com.example.pb.svc.test.TestGrpc;
+import com.example.service.TestService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -27,9 +29,12 @@ import java.util.Map;
 @Tag(name = "Test controller")
 public class TestController extends CoreController {
 
+    private final TestService testService;
+
     @Autowired
-    public TestController(BaseConfig configData) {
+    public TestController(BaseConfig configData, TestService testService) {
         super(configData);
+        this.testService = testService;
     }
 
     @GetMapping("")
@@ -55,7 +60,8 @@ public class TestController extends CoreController {
 
     public Message greeter(HttpServletRequest request) throws UnsupportedEncodingException {
         Map<String, Object> result = new HashMap<>();
-        result.put("Hello", "world");
+        String response = testService.Testing("hello");
+        result.put("Hello", response);
 
         // in header
         // Accept-Language: en-US
